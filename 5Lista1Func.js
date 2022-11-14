@@ -278,7 +278,7 @@ function ExcluirProduto(nomeP, quantidade) {
     console.log(nomesCarrinho)
 }
 
-function RetornarValor() {
+function RetornarValorTotal() {
     var valorTotal = 0
 
     for(var i; i < nomesCarrinho.length; i++){
@@ -286,3 +286,13 @@ function RetornarValor() {
     }
     return valorTotal
 }
+
+function ExibirTudo(){
+    for(var i; i < nomesCarrinho.length;i++){
+        console.log("O produto " + nomesCarrinho[i] + " e "+ quantidadeCarrinho[i] + " unidades.")
+    }
+    var exibirValorTotal = RetornarValorTotal()
+    console.log("O valor total é: " + exibirValorTotal)
+}
+
+
