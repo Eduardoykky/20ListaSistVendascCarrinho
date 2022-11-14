@@ -189,8 +189,101 @@ function ExcluirProduto() {
     index = index - 1
 }
 
+///////////////////////////////////////////////////////////////////////
+
+var quantidadeCarrinho = []
+var nomesCarrinho = []
+var precosCarrinho = []
+var indexCarrinho = 0
+
+var nomesCarrinhoSup = []
+var quantidadeCarrinhoSup = []
+var precosCarrinhoSup = []
+var indexCarrinhoSup = []
+
+function AdicionarCarrinho(nomeP, quantidade) {
+    var dentro = false
+    for (var index = 0; index < nomes.length; index++) {
+        if (nomeP == nomesCarrinho[index]) {
+            dentro = true
+        }
+    }    
+    if (dentro) {
+        for (var index = 0; index < nomes.length; index++) {
+            if (nomeP == nomesCarrinho[index]) {
+                quantidadeCarrinho[index] = quantidadeCarrinho[index] + quantidade
+        }
+    }    
+    }else{
+        for (var index = 0; index < precos.length; index++) {
+            if(nomeP == nomes[index]){
+                precosCarrinho[indexCarrinho] = precos[index]
+            }
+        }
+        nomesCarrinho[indexCarrinho] = nomeP
+        quantidadeCarrinho[indexCarrinho] = quantidade
+        indexCarrinho++
+    }    
+        
+        
+    console.log("Produto adicionado no carrinho com sucesso!")
+    console.log(precosCarrinho)
+}
+
+function ExcluirProduto(nomeP, quantidade) {
+
+    nomesCarrinhoSup = []
+    quantidadeCarrinhoSup = []
+    precosCarrinhoSup = []
+
+    for (var index = 0; index < nomesCarrinho.length; index++) {
+        if (nomeP == nomesCarrinho[index]) {
+            if (quantidade == quantidadeCarrinho[index]) {
+                nomesCarrinho[index] = 0
+            }else{
+                quantidadeCarrinho[index] = quantidadeCarrinho[index] - quantidade
+            }
+        }
+    }
+    for (var index1 = 0; index1 < nomesCarrinho.length; index1++) {
+        if (nomesCarrinho[index1] != 0) {
+            nomesCarrinhoSup[indexCarrinhoSup] = nomesCarrinho[index1]
+            quantidadeCarrinhoSup[indexCarrinhoSup] = quantidadeCarrinho[index]
+            precosCarrinhoSup[indexCarrinhoSup] = precosCarrinho[index]
+            indexCarrinhoSup++
+        }
+    }
+    nomesCarrinho = nomesCarrinhoSup
+    quantidadeCarrinho = quantidadeCarrinhoSup
+    precosCarrinho = precosCarrinhoSup
+    indexCarrinho--
+    indexCarrinhoSup = 0
+    console.log("O produto foi exluido com sucesso!")
+}
+
+function RetornarValorTotal() {
+    var valorTotal = 0
+
+    for (var index = 0; index < nomesCarrinho.length; index++) {
+        valorTotal = valorTotal + (precosCarrinho[index] * quantidadeCarrinho[index])
+    }
+    return valorTotal
+}
+
+function ExibirTudo(){
+    for (var index = 0; index < nomesCarrinho.length; index++) {
+        console.log("O produto " + nomesCarrinho[index] + ", "+ quantidadeCarrinho[index] + " unidades.")
+    }
+    var exibirValorTotal = RetornarValorTotal()
+    console.log(exibirValorTotal)
+}
+
+
 var continuar = true
 while (continuar) {
+
+    var menu = parseInt(prompt("1 Para adicionar produtos no sistema(admin) e 2 Para adicionar no carrinho(cliente)"))
+    if (menu == 1) {
     var opcao = prompt("Insira a opção que deseja executar 1 - Cadastro, 2 - Buscar por ID, 3 - Buscar por nome, 4 - Ordernar por ID, 5 - Ordernar por preço, 6 - Ordernar por Avaliação, 7 - Atualizar Preço e 8 Excluir Produto.")
 
     if (opcao == "1") {
@@ -222,77 +315,23 @@ while (continuar) {
     if (opcaoContinuar != "s") {
         continuar = false
     }
-}
-
-///////////////////////////////////////////////////////////////////////
-
-var quantidadeCarrinho = []
-var nomesCarrinho = []
-var precosCarrinho = []
-var indexCarrinho = 0
-
-var nomesCarrinhoSup = []
-var quantidadeCarrinhoSup = []
-var precosCarrinhoSup = []
-var indexCarrinhoSup = []
-
-function AdicionarCarrinho(nomeP, quantidade) {
-    for (var index = 0; index < indexCarrinho; index++) {
-        if (nomeP == nomesCarrinho[index]) {
-            quantidadeCarrinho = quantidadeCarrinho[index] + quantidade
-        }else{
-            nomesCarrinho[indexCarrinho] = nomeP
-            quantidadeCarrinho[indexCarrinho] = quantidade
-        }
-    } 
-}
-
-function ExcluirProduto(nomeP, quantidade) {
-
-    nomesCarrinhoSup = []
-    quantidadeCarrinhoSup = []
-    precosCarrinhoSup = []
-
-    for (var index = 0; index < nomesCarrinho.length; index++) {
-        if (nomeP == nomesCarrinho[index]) {
-            if (quantidade == quantidadeCarrinho[index]) {
-                nomesCarrinho[index] = 0
-            }else{
-                quantidadeCarrinho[index] = quantidadeCarrinho[index] - quantidade
-            }
-        }
+}else{
+    var opcao1 = parseInt(prompt("O que deseja fazer? 1 para Cadastrar produto; 2 Para Excluir um produto; 3 Para exibir o total da compra."))
+    if (opcao1 == 1) {
+        var nomeP = prompt("Insira o nome do produto que deseja inserir no carrinho.")
+        var quantidade = parseInt(prompt("Insira a quantidade de produtos voçê deseja inserir no carrinho."))
+        AdicionarCarrinho(nomeP, quantidade)
+    }else if(opcao1 == 2){
+        var nomeP = prompt("Insira o nome do produto que deseja excluir do carrinho.")
+        var quantidade = parseInt(prompt("Insira a quantidade de produtos que voçê deseja excluir do carrinho."))
+        ExcluirProduto(nomeP, quantidade)
+    }else {
+        ExibirTudo()
     }
-    for (var index1 = 0; index1 < nomesCarrinho.length; index1++) {
-        if (nomesCarrinho[index1] != 0) {
-            nomesCarrinhoSup[indexCarrinhoSup] = nomesCarrinho[index1]
-            quantidadeCarrinhoSup[indexCarrinhoSup] = quantidadeCarrinho[index]
-            precosCarrinhoSup[indexCarrinhoSup] = precosCarrinho[index]
-            indexCarrinhoSup++
-        }
+    var opcaoContinuar1 = prompt("Deseja continuar? s ou n")
+
+    if (opcaoContinuar1 != "s") {
+        continuar = false
     }
-    nomesCarrinho = nomesCarrinhoSup
-    quantidadeCarrinho = quantidadeCarrinhoSup
-    precosCarrinho = precosCarrinhoSup
-    indexCarrinho--
-    indexCarrinhoSup = 0
-    console.log(nomesCarrinho)
 }
-
-function RetornarValorTotal() {
-    var valorTotal = 0
-
-    for(var i; i < nomesCarrinho.length; i++){
-        valorTotal = valorTotal + precosCarrinho[i] + quantidadeCarrinho[i]
-    }
-    return valorTotal
 }
-
-function ExibirTudo(){
-    for(var i; i < nomesCarrinho.length;i++){
-        console.log("O produto " + nomesCarrinho[i] + " e "+ quantidadeCarrinho[i] + " unidades.")
-    }
-    var exibirValorTotal = RetornarValorTotal()
-    console.log("O valor total é: " + exibirValorTotal)
-}
-
-
