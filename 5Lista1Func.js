@@ -277,3 +277,12 @@ function ExcluirProduto(nomeP, quantidade) {
     indexCarrinhoSup = 0
     console.log(nomesCarrinho)
 }
+
+function RetornarValor() {
+    var valorTotal = 0
+
+    for(var i; i < nomesCarrinho.length; i++){
+        valorTotal = valorTotal + precosCarrinho[i] + quantidadeCarrinho[i]
+    }
+    return valorTotal
+}
