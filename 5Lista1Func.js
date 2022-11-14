@@ -227,17 +227,53 @@ while (continuar) {
 ///////////////////////////////////////////////////////////////////////
 
 var quantidadeCarrinho = []
-var nomesProdutos = []
+var nomesCarrinho = []
 var precosCarrinho = []
 var indexCarrinho = 0
 
+var nomesCarrinhoSup = []
+var quantidadeCarrinhoSup = []
+var precosCarrinhoSup = []
+var indexCarrinhoSup = []
+
 function AdicionarCarrinho(nomeP, quantidade) {
     for (var index = 0; index < indexCarrinho; index++) {
-        if (nomeP == nomesProdutos[index]) {
+        if (nomeP == nomesCarrinho[index]) {
             quantidadeCarrinho = quantidadeCarrinho[index] + quantidade
         }else{
-            nomesProdutos[indexCarrinho] = nomeP
+            nomesCarrinho[indexCarrinho] = nomeP
             quantidadeCarrinho[indexCarrinho] = quantidade
         }
     } 
+}
+
+function ExcluirProduto(nomeP, quantidade) {
+
+    nomesCarrinhoSup = []
+    quantidadeCarrinhoSup = []
+    precosCarrinhoSup = []
+
+    for (var index = 0; index < nomesCarrinho.length; index++) {
+        if (nomeP == nomesCarrinho[index]) {
+            if (quantidade == quantidadeCarrinho[index]) {
+                nomesCarrinho[index] = 0
+            }else{
+                quantidadeCarrinho[index] = quantidadeCarrinho[index] - quantidade
+            }
+        }
+    }
+    for (var index1 = 0; index1 < nomesCarrinho.length; index1++) {
+        if (nomesCarrinho[index1] != 0) {
+            nomesCarrinhoSup[indexCarrinhoSup] = nomesCarrinho[index1]
+            quantidadeCarrinhoSup[indexCarrinhoSup] = quantidadeCarrinho[index]
+            precosCarrinhoSup[indexCarrinhoSup] = precosCarrinho[index]
+            indexCarrinhoSup++
+        }
+    }
+    nomesCarrinho = nomesCarrinhoSup
+    quantidadeCarrinho = quantidadeCarrinhoSup
+    precosCarrinho = precosCarrinhoSup
+    indexCarrinho--
+    indexCarrinhoSup = 0
+    console.log(nomesCarrinho)
 }
